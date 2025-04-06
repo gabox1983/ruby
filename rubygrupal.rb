@@ -1,5 +1,5 @@
 # ID DE ESTUDIANTE: 0160439
-# Nombre y apellidos del estudiante: Gabriel Colmenares
+# Nombre y apellidos del estudiante: Gabriel Colmenares , Jeimy Lopez
 # Universidad: Dewey University
 # Curso: COMP 323 Trabajo grupal
 # Fecha de entrega: 1 de abril de 2025
