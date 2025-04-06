@@ -2,7 +2,7 @@
 **NOMBRE Y APELLIDOS:** Gabriel Colmenares  
 **UNIVERSIDAD:** Dewey University  
 **CURSO:** COMP 323 - Trabajo Grupal  
-**FECHA DE ENTREGA:** 4 de abril de 2025  
+**FECHA DE ENTREGA:** 7 de abril de 2025  
 
 ## 📌 DESCRIPCIÓN DEL PROYECTO
 
