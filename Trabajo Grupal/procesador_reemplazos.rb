@@ -41,6 +41,10 @@ class ProcesadorReemplazos
 
         #Registrar el reemplazo
         @reporte.registrar('reemplazos', 0, 1)
+
+      #Reemplaza el nuevo texto en archivo
+      File.write("texto.txt", texto)
+        
       when "2"
         break  #Salida del módulo
       else
