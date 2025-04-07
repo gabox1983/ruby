@@ -4,53 +4,54 @@
 # Curso: COMP 323 Trabajo grupal
 # Fecha de entrega: 1 de abril de 2025
 # Descripción:
-# Programa que integra múltiples módulos para el procesamiento de texto.
-# Incluye funciones automáticas, manuales, reemplazo en tiempo real y un
-# sistema de reporte de uso. El menú principal permite al usuario acceder
-# a cada funcionalidad de forma interactiva. Se utilizan clases, métodos,
-# constructores, variables de instancia y control de flujo.
+# Programa integral que combina múltiples módulos especializados en el procesamiento
+# de texto. Abarca procesamiento automático, entrada manual, reemplazos en tiempo real
+# y generación de reportes de uso. Se basa en el paradigma orientado a objetos, haciendo 
+# uso de clases, métodos, constructores, variables de instancia, control de flujo y 
+# estructuras repetitivas como bucles para la interacción dinámica con el usuario.
 
 # =============================================
 # Clase principal del programa: ProcesadorTexto
-# Esta clase actúa como controlador central.
-# Se encarga de cargar los módulos, ejecutar el menú
-# principal y redirigir las acciones del usuario.
+# Funciona como clase controladora o central del sistema.
+# Administra los diferentes módulos de procesamiento y navegación del usuario.
+# Se encarga de la inicialización de componentes y el despliegue del menú.
 # =============================================
 class ProcesadorTexto
 
   # ----------------------------------------------------------
-  # Constructor de la clase (método initialize)
-  # Este método se ejecuta automáticamente al crear un objeto.
-  # Aquí se hace el "require_relative" de los otros archivos
-  # que contienen la lógica modular, y se inicializan las
-  # instancias de cada módulo, pasando como argumento un
-  # objeto ReporteUtilizacion para seguimiento.
+  # Constructor de la clase (initialize)
+  # Este método especial se ejecuta automáticamente al instanciar la clase.
+  # Aquí se utilizan 'require_relative' para importar módulos externos Ruby
+  # que contienen la lógica de los distintos procesadores. También se crea
+  # una instancia compartida de la clase ReporteUtilizacion, que permite
+  # registrar y mostrar estadísticas de uso en todos los módulos.
   # ----------------------------------------------------------
   def initialize
-    require_relative 'procesador_automatico'    # Módulo 1: procesamiento automático
-    require_relative 'procesador_manual'        # Módulo 2: entrada manual/interactiva
-    require_relative 'procesador_reemplazos'    # Módulo 3: reemplazos en tiempo real
-    require_relative 'reporte_utilizacion'      # Módulo 4: registro y visualización del uso
+    require_relative 'procesador_automatico'    # Módulo 1: procesamiento automatizado del texto
+    require_relative 'procesador_manual'        # Módulo 2: ingreso y edición de texto manual
+    require_relative 'procesador_reemplazos'    # Módulo 3: reemplazos de texto en tiempo real
+    require_relative 'reporte_utilizacion'      # Módulo 4: seguimiento y reporte del uso del sistema
 
-    # Se crea una instancia del módulo de reporte para compartir entre los demás módulos
+    # Instancia del módulo de estadísticas compartido con los demás módulos
     @reporte = ReporteUtilizacion.new
 
-    # Se crean instancias de los módulos principales, cada uno recibe el objeto de reporte
+    # Se instancian los módulos funcionales y se les pasa el objeto de reporte como dependencia
     @procesador_automatico = ProcesadorAutomatico.new(@reporte)
     @procesador_manual = ProcesadorManual.new(@reporte)
     @procesador_reemplazos = ProcesadorReemplazos.new(@reporte)
   end
 
   # ----------------------------------------------------------
-  # Método principal del programa: mostrar_menu
-  # Muestra el menú al usuario, solicita la opción deseada,
-  # y llama al método correspondiente del módulo según la selección.
-  # Utiliza un bucle loop para seguir ejecutando hasta que el usuario
-  # seleccione la opción de "Salir".
+  # Método principal de interacción: mostrar_menu
+  # Presenta un menú al usuario en consola, permitiéndole seleccionar
+  # entre las distintas funcionalidades disponibles. Se utiliza un bucle
+  # 'loop do' para mantener el menú activo hasta que el usuario elija salir.
+  # Cada opción llama al método correspondiente en el módulo apropiado.
+  # Se incluye validación para entradas incorrectas.
   # ----------------------------------------------------------
   def mostrar_menu
-    loop do
-      # Despliegue de opciones al usuario
+    loop do  # Bucle infinito para mantener el menú activo hasta que el usuario decida salir
+      # Despliegue de opciones
       puts "\n=== MENÚ PRINCIPAL ==="
       puts "1. Procesador de Texto Automático"
       puts "2. Procesador de Texto Manual"
@@ -59,24 +60,24 @@ class ProcesadorTexto
       puts "5. Salir"
       print "Seleccione una opción: "
 
-      # Captura de opción ingresada por el usuario
+      # Captura y almacenamiento de la opción seleccionada
       opcion = gets.chomp
 
-      # Decisión basada en la opción ingresada
+      # Lógica de control de flujo (case) que redirige a los distintos módulos según la opción
       case opcion
       when "1"
-        @procesador_automatico.procesar  # Llama al método del módulo 1
+        @procesador_automatico.procesar  # Ejecuta el procesamiento automático de texto
       when "2"
-        @procesador_manual.interactivo  # Llama al método del módulo 2
+        @procesador_manual.interactivo  # Activa el modo de edición de texto manual/interactivo
       when "3"
-        @procesador_reemplazos.reemplazar_en_tiempo_real  # Llama al método del módulo 3
+        @procesador_reemplazos.reemplazar_en_tiempo_real  # Inicia el sistema de reemplazo dinámico
       when "4"
-        @reporte.mostrar  # Muestra estadísticas de uso (módulo 4)
+        @reporte.mostrar  # Muestra estadísticas acumuladas del uso del sistema
       when "5"
-        puts "Saliendo del programa. ¡Hasta luego!"
-        break  # Rompe el bucle y termina el programa
+        puts "Saliendo del programa. ¡Hasta luego!"  # Mensaje de salida amigable
+        break  # Rompe el bucle y termina la ejecución del menú
       else
-        puts "Opción inválida. Intente de nuevo."  # Validación si la opción no es válida
+        puts "Opción inválida. Intente de nuevo."  # Manejo de errores para entradas no válidas
       end
     end
   end
@@ -84,11 +85,12 @@ end
 
 # ==========================================================
 # Punto de entrada del programa (main)
-# Esta es la línea donde comienza la ejecución cuando se
-# corre directamente el archivo (no cuando se importa).
-# Se instancia la clase principal y se llama al menú.
+# Esta es la sección que se ejecuta cuando se corre directamente este archivo.
+# Utiliza la condición especial 'if __FILE__ == $0' que garantiza que el menú
+# solo se despliegue si el archivo no está siendo importado desde otro módulo.
+# Se crea una instancia de la clase principal y se llama al método del menú.
 # ==========================================================
 if __FILE__ == $0
-  app = ProcesadorTexto.new  # Crea objeto de la clase principal
-  app.mostrar_menu           # Inicia el menú de navegación
+  app = ProcesadorTexto.new  # Creación del objeto principal del programa
+  app.mostrar_menu           # Invocación del menú para comenzar la interacción con el usuario
 end
